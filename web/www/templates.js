@@ -1,0 +1,2 @@
+angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("home/template","<h1>Loan Calculator!</h1><input placeholder=Capital> <input placeholder=Duration> <input placeholder=\"Interest Rate\"> <input placeholder=\"Loan Type\"> <button>Submit</button>");
+$templateCache.put("login/template","hi!!!<h1>Login</h1>");}]);

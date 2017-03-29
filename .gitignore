@@ -15,5 +15,4 @@ app/kain2/settings/locals.py
 web/apk/*
 web/node_modules/
 web/kain2/node_modules/
-web/www/*
 web/npm
