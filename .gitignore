@@ -1,0 +1,19 @@
+# Main application.
+*.swp
+__pycache__
+ssl/*
+bin/*
+
+# Django appserver.
+app/*.pyc
+app/.ve
+app/db.sqlite3
+app/kain2/static/*
+app/kain2/settings/locals.py
+
+# Ionic webserver.
+web/apk/*
+web/node_modules/
+web/kain2/node_modules/
+web/www/*
+web/npm
