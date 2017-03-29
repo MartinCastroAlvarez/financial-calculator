@@ -17,7 +17,7 @@ class Key(models.Model):
 
     """
 
-    title = models.CharField(max_length=300, blank=False, null=False, unique=True, db_index=True)
+    title = models.CharField(max_length=255, blank=False, null=False, unique=True, db_index=True)
     username = models.CharField(max_length=100, blank=True, null=True, db_index=True)
     password = models.CharField(max_length=100, blank=True, null=True)
     url = models.URLField(max_length=250, blank=True, null=True, db_index=True)
@@ -27,4 +27,5 @@ class Key(models.Model):
         return self.title
 
     class Meta:
+        abstract = True
         ordering = ['title', ]

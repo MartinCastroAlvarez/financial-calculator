@@ -29,6 +29,7 @@ class Quote(models.Model):
             return self.text
 
     class Meta:
+        abstract = True
         ordering = ['author', "text"]
 
     @classmethod

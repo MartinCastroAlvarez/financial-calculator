@@ -23,10 +23,10 @@ cd $HOME/loancalculator/app/
 virtualenv -p python3 .ve
 source .ve/bin/activate
 pip3 install -r requirements.txt
-cp ./loancalculator/settings/template.py /loancalculator/settings/locals.py
+cp ./loancalculator/settings/template.py ./loancalculator/settings/locals.py
 vi ./loancalculator/settings/locals.py
 
-echo "
+sudo echo "
 server {
   listen 7004 ssl;
   listen [::]:7006 default_server ipv6only=on;
@@ -48,7 +48,7 @@ server {
 }
 " > /etc/nginx/sites-available/loancalculatorapp
 
-echo "
+sudo echo "
 [uwsgi]
 vhost = true
 plugins = python3
@@ -57,7 +57,7 @@ venv = /home/ubuntu/loancalculator/.ve
 chdir = /home/ubuntu/loancalculator/
 wsgi-file = /home/ubuntu/loancalculator/loancalculator/wsgi.py
 callable = application
-"> /etc/uwsgi/apps-available/loancalculatorapp.ini
+" > /etc/uwsgi/apps-available/loancalculatorapp.ini
 
 sudo ln -sf /etc/nginx/sites-available/loancalculatorapp /etc/nginx/sites-enabled
 sudo ln -sf /etc/uwsgi/apps-available/loancalculatorapp.ini /etc/uwsgi/apps-enabled
@@ -73,7 +73,7 @@ sudo service uwsgi restart
 ```
 cd $HOME/loancalculator/web/
 npm install
-echo "
+sudo echo "
 server {
   listen 7005 ssl;
   listen [::]:7007 default_server ipv6only=on;
