@@ -23,7 +23,7 @@ cd $HOME/loancalculator/app/
 virtualenv -p python3 .ve
 source .ve/bin/activate
 pip3 install -r requirements.txt
-cp ./loancalculator/settings/template.py ./app/loancalculator/settings/locals.py
+cp ./loancalculator/settings/template.py /loancalculator/settings/locals.py
 vi ./loancalculator/settings/locals.py
 
 echo "
