@@ -1,5 +1,5 @@
 angular
 .module('loancalculator', [
-  'ionic', 
-  'templates', 
+    'ionic', 
+    'templates', 
 ])

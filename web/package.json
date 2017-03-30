@@ -1,7 +1,7 @@
 {
-  "name": "loancalculator",
+  "name": "kain2",
   "version": "1.1.1",
-  "description": "loancalculator: An Ionic project",
+  "description": "kain2: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-angular-templatecache": "^1.9.1",

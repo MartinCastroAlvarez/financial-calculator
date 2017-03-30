@@ -28,16 +28,14 @@ var paths = {
   ],
   worker: ['src/js/worker.js'],
   manifest: ['src/manifest.json'],
-  modules: [
-    'src/js/modules.js',
-  ],
   angular: [
+    'src/js/modules.js',
+    'src/js/services/*.js',
     'src/js/config.js',
     'src/js/routes.js',
+    'src/js/directives/**/*.js',
+    'src/js/controllers/**/*.js',
     'src/js/run.js',
-    'src/js/directives/**/controller.js',
-    'src/js/controllers/**/controller.js',
-    'src/js/services/*.js',
   ],
   templates: [
     'src/js/controllers/**/template.html',
@@ -97,12 +95,6 @@ gulp.task('worker', function(done) {
     .pipe(gulp.dest('www/'))
     .on('end', done);
 });
-gulp.task('modules', function(done) {
-  gulp.src(paths.modules)
-    .pipe(uglify())
-    .pipe(gulp.dest('www/'))
-    .on('end', done);
-});
 gulp.task('manifest', function(done) {
   gulp.src(paths.manifest)
     .pipe(jsonminify())
@@ -136,7 +128,6 @@ gulp.task('index', function(done) {
 // Watch when something is changed.
 watchDependencies = [
   'angular',
-  'modules',
   'templates',
   'fonts',
   'images',
@@ -148,7 +139,6 @@ watchDependencies = [
 ];
 gulp.task('watch', watchDependencies, function() {
 
-  gulp.watch(paths.modules, ['modules']);
   gulp.watch(paths.angular, ['angular']);
   gulp.watch(paths.templates, ['templates']);
   gulp.watch(paths.fonts, ['fonts']);

@@ -1,6 +1,10 @@
-angular.module("loancalculator").config(function(){});
-angular.module("loancalculator").config(["$stateProvider","$urlRouterProvider",function(e,o){e.state("home",{url:"/",templateUrl:"home/template",controller:"HomeCtrl"}),o.otherwise("/")}]);
-angular.module("loancalculator").run(["$ionicPlatform",function(o){o.ready(function(){window.cordova&&window.cordova.plugins&&window.cordova.plugins.Keyboard&&(cordova.plugins.Keyboard.hideKeyboardAccessoryBar(!0),cordova.plugins.Keyboard.disableScroll(!0)),window.StatusBar&&StatusBar.styleDefault()})}]);
-
-angular.module("loancalculator").controller("HomeCtrl",["$scope",function(l){}]);
-
+angular.module("loancalculator",["ionic","templates"]);
+angular.module("loancalculator").provider("appserver",function(){var n={HOST:""};return n.$get=["$q","$http","$log",function(t,r,u){function e(e,o){var a=o.url,l=o.data||{},i=o.args||{},c={"Content-Type":"application/json"},f=n.HOST+a;return t(function(n,t){var o={method:e,url:f,data:l,params:i,timeout:3e3,headers:c};u.log(e+" "+o.url),r(o).then(function(t){u.log(t),n(t)},function(n){u.log(n),t(n)})})}return{token:null,get:function(n){return e("GET",n)},post:function(n){return e("POST",n)},put:function(n){return e("PUT",n)},delete:function(n){return e("DELETE",n)}}}],n});
+angular.module("loancalculator").factory("login",["$q","appserver","session",function(n,o,r){return{login:function(r,t){return n(function(n,u){o.post({url:"login/",data:{username:r,password:t}}).then(function(o){n(repsonse)},function(n){u(n)})})}}}]);
+angular.module("loancalculator").factory("session",["$q",function(n){var t={token:"",isAuthenticated:function(){return""!=t.token}};return t}]);
+angular.module("loancalculator").config(["appserverProvider",function(a){a.HOST="https://ec2-52-67-183-188.sa-east-1.compute.amazonaws.com:7004/"}]);
+angular.module("loancalculator").config(["$stateProvider","$urlRouterProvider",function(e,l){e.state("home",{url:"/",authRequired:!1,templateUrl:"home/template",controller:"HomeCtrl",controllerAs:"vm"}).state("login",{url:"/login/",authRequired:!1,templateUrl:"login/template",controller:"LoginCtrl",controllerAs:"vm"}),l.otherwise("/")}]);
+angular.module("loancalculator").directive("tooltip",function(){return{restrict:"C",link:function(t,i,n){if(n.title){var o=$(i);o.attr("title",n.title),o.tooltipster({animation:n.animation,trigger:"click",position:"right",positionTracker:!0,maxWidth:500,contentAsHTML:!0})}}}});
+angular.module("loancalculator").controller("LoginCtrl",["$scope","login",function(o,n){var a={username:"",password:"",doLogin:function(){n.login(a.username,a.password)},onLoad:function(){}};return a.onLoad(),a}]);
+angular.module("loancalculator").controller("HomeCtrl",["$scope",function(o){var n={onLoad:function(){}};return n.onLoad(),n}]);
+angular.module("loancalculator").run(["$ionicPlatform","$state","session","$rootScope",function(o,a,n,t){o.ready(function(){window.cordova&&window.cordova.plugins&&window.cordova.plugins.Keyboard&&(cordova.plugins.Keyboard.hideKeyboardAccessoryBar(!0),cordova.plugins.Keyboard.disableScroll(!0)),window.StatusBar&&StatusBar.styleDefault()}),t.$on("$stateChangeStart",function(o,t,r,e,i){t.authRequired&&!n.isAuthenticated()&&(a.transitionTo("login"),o.preventDefault())})}]);
