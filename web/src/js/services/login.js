@@ -16,7 +16,8 @@ function($q, appserver, session) {
                     }
                 })
                 .then(function(response) {
-                    resolve(repsonse);
+                    session.token = response.data.token;
+                    resolve(response);
                 }, function(error) {
                     reject(error);
                 });

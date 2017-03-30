@@ -1,14 +1,21 @@
 angular
 .module("loancalculator")
 .controller("LoginCtrl",
-["$scope", "login",
-function($scope, login) {
+["$scope", "login", "$state", "toastr",
+function($scope, login, $state, toastr) {
 
     var $controller = {
        username: "",
        password: "",
        doLogin: function() {
-           login.login($controller.username, $controller.password);
+           login
+           .login($controller.username, $controller.password)
+           .then(function(response) {
+               toastr.success("Successfully logged in!");
+               $state.transitionTo("home");
+           }, function(error) {
+               toastr.error("Authentication failed!");
+           });
        },
        onLoad: function() {},
     }

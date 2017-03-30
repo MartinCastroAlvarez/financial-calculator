@@ -7,7 +7,8 @@ function() {
       HOST: ""
     };
 
-    $provider.$get = ["$q", "$http", "$log",  function($q, $http, $log) {
+    $provider.$get = ["$q", "$http", "$log", "session", "$ionicLoading",
+    function($q, $http, $log, session, $ionicLoading) {
 
       function request(method, reqargs) {
 
@@ -16,8 +17,10 @@ function() {
         var params = reqargs.args || {};
         var headers = {
           'Content-Type': "application/json",
-          // 'Access-Token': $service.token,
-        } 
+        }
+
+        if (session.isAuthenticated())
+          headers.Authorization = "Token " + session.token;
 
         var url = $provider.HOST + path;
 
@@ -29,6 +32,11 @@ function() {
                 resolve({});
             }
             **/
+
+            $ionicLoading.show({
+                template: 'Loading...',
+                duration: 3000
+            })
 
             var config = {
                 method: method,
@@ -42,9 +50,11 @@ function() {
             $log.log(method + " " + config.url);
             $http(config)
             .then(function (response) {
+                $ionicLoading.hide();
                 $log.log(response);
                 resolve(response); 
              }, function(error) {
+                $ionicLoading.hide();
                 $log.log(error);
                 reject(error); 
              });

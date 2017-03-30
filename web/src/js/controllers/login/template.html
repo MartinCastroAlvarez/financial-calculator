@@ -1,3 +1,17 @@
-<input ng-model='vm.username'/>
-<input ng-model='vm.password'/>
-<button ng-click='vm.doLogin()'>Submit!</button>
+<div class="row responsive-sm">
+    <div class="col col-50 col-offset-25">
+        <div class="list">
+            <label class="item item-input">
+                <i class="icon ion-email placeholder-icon"></i>
+                <input type="text" placeholder="Username" ng-model='vm.username'>
+            </label>
+            <label class="item item-input">
+                <i class="icon ion-locked placeholder-icon"></i>
+                <input type="password" placeholder="Password" ng-model='vm.password'>
+            </label>
+            <button class="button button-full button-positive" ng-click='vm.doLogin()'>
+                Submit
+            </button>
+        </div>
+    </div>
+</div>

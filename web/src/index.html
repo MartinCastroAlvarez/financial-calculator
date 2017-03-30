@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>BridgeForm</title>
+    <title>Kain 2</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="/img/icon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/icon/apple-icon-60x60.png">
@@ -22,11 +22,25 @@
 
     <link rel="manifest" href="manifest.json">
 
-    <link href="libs/ionic/css/ionic.css" rel="stylesheet">
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+    <!-- css style -->
+    <link href="ionic/css/ionic.css" rel="stylesheet">
+    <script src="ionic/js/ionic.bundle.js"></script>
+
+    <link href="libs/libs.css" rel="stylesheet">
+    <script src="libs/libs.js"></script>
+
     <link href="style.css" rel="stylesheet">
 
-    <script src="libs/ionic/js/ionic.bundle.js"></script>
-
+    <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
     <script src="templates.js"></script>
@@ -34,9 +48,11 @@
 
   </head>
   <body ng-app="loancalculator">
+
     <div class="bar bar-header bar-positive">
       <h1 class="title">BridgeForm</h1>
     </div>
     <ion-nav-view class='has-header'></ion-nav-view>
+
   </body>
 </html>

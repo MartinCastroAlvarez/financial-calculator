@@ -6,7 +6,7 @@ angular
     var $service = {
         token: "",
         isAuthenticated: function() {
-            return $service.token != "";
+            return $service.token && $service.token != "";
         },
     }
 

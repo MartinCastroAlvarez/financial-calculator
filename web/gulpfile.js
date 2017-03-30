@@ -12,36 +12,52 @@ var minifyHTML = require('gulp-minify-html');
 var imagemin = require('gulp-imagemin');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
-var minifyCss = require('gulp-minify-css');
+var minifyCSS = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 
 var paths = {
-  images: [
-    'src/img/**/*.+(png|jpg|gif|svg|ico)',
-    'src/img/*.+(png|jpg|gif|svg|ico)',
-  ],
-  sass: ['./src/scss/*.scss'],
-  fonts: ['src/fonts/**/*'],
-  libs: [
-    'src/libs/**/**'
-  ],
-  worker: ['src/js/worker.js'],
-  manifest: ['src/manifest.json'],
-  angular: [
-    'src/js/modules.js',
-    'src/js/services/*.js',
-    'src/js/config.js',
-    'src/js/routes.js',
-    'src/js/directives/**/*.js',
-    'src/js/controllers/**/*.js',
-    'src/js/run.js',
-  ],
-  templates: [
-    'src/js/controllers/**/template.html',
-    'src/js/directives/**/template.html',
-  ],
-  index: ['src/index.html'],
+    images: [
+        'src/img/**/*.+(png|jpg|gif|svg|ico)',
+        'src/img/*.+(png|jpg|gif|svg|ico)',
+    ],
+    sass: [
+        './src/scss/*.scss',
+    ],
+    fonts: [
+        'src/fonts/**/*',
+    ],
+    libs: {
+        dirs: [
+            'src/ionic/**',
+        ],
+        css: [
+            './src/libs/**/*.css',
+            './src/libs/*.css',
+        ],
+        js: [
+            './src/libs/**/*.js',
+            'src/libs/*.js',
+        ],
+    },
+    worker: ['src/js/worker.js'],
+    manifest: ['src/manifest.json'],
+    angular: [
+        'src/js/modules.js',
+        'src/js/services/*.js',
+        'src/js/config.js',
+        'src/js/routes.js',
+        'src/js/directives/**/*.js',
+        'src/js/controllers/**/*.js',
+        'src/js/run.js',
+    ],
+    templates: [
+        'src/js/controllers/**/*.html',
+        'src/js/directives/**/*.html',
+    ],
+    index: [
+        'src/index.html'
+    ],
 };
 
 /* Run on gulp start */
@@ -50,7 +66,7 @@ defaultDependencies = [
 ]
 gulp.task('default', defaultDependencies)
 
-// This task is called 'sass'.
+// Compress all types of files.
 gulp.task('images', function(){
   gulp.src(paths.images)
     .pipe(cache(imagemin({
@@ -63,7 +79,7 @@ gulp.task('sass', function(done) {
     .pipe(sass())
     .on('error', sass.logError)
     .pipe(concat('style.css'))
-    .pipe(minifyCss({
+    .pipe(minifyCSS({
       keepSpecialComments: 0
     }))
     // .pipe(rename({extname: '.min.css'}))
@@ -75,10 +91,19 @@ gulp.task('fonts', function() {
     .pipe(gulp.dest('www/fonts'))
 })
 gulp.task('libs', function(done) {
-  gulp.src(paths.libs)
-    // .pipe(uglify())
-    // .pipe(concat('libs.js'))
+  gulp.src(paths.libs.dirs, {base: "src/"})
+    .pipe(gulp.dest('www/'))
+  gulp.src(paths.libs.css)
+    .pipe(minifyCSS({
+      keepSpecialComments: 0
+    }))
+    .pipe(concat('libs.css'))
     .pipe(gulp.dest('www/libs/'))
+  gulp.src(paths.libs.js)
+    .pipe(ngmin({mangle: false}))
+    .pipe(uglify())
+    .pipe(concat('libs.js'))
+    .pipe(gulp.dest('www/libs'))
     .on('end', done);
 });
 gulp.task('angular', function(done) {
@@ -142,7 +167,9 @@ gulp.task('watch', watchDependencies, function() {
   gulp.watch(paths.angular, ['angular']);
   gulp.watch(paths.templates, ['templates']);
   gulp.watch(paths.fonts, ['fonts']);
-  gulp.watch(paths.libs, ['libs']);
+  gulp.watch(paths.libs.dirs, ['libs']);
+  gulp.watch(paths.libs.js, ['libs']);
+  gulp.watch(paths.libs.css, ['libs']);
   gulp.watch(paths.manfiest, ['manifest']);
   gulp.watch(paths.index, ['index']);
   gulp.watch(paths.worker, ['worker']);

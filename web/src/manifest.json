@@ -1,6 +1,6 @@
 {
-  "name": "Bridge Form",
-  "short_name": "BridgeForm",
+  "name": "LoanCalculator",
+  "short_name": "LoanCalculator",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
