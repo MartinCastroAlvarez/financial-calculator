@@ -96,36 +96,57 @@
                     Details
                 </label>
                 <label class="item">
-                    Rate: {{ vm.loan.rate }}%
-                </label>
-                <label class="item">
                     Per Month: {{ vm.loan.perMonth|currency:"£":2 }}
                 </label>
+                <label class="item">
+                    Total Payable: {{ vm.loan.total|currency:"£":2 }}
+                </label>
+                <label class="item">
+                    Rate: {{ vm.loan.rates.nominal }}%
+                </label>
+                <label class="item">
+                    Overall Rate: {{ vm.loan.rates.overall }}%
+                </label>
+
                 <label class="item item-divider">
                     Fees
                 </label>
                 <label class="item">
-                    Estimated Arrangement Fee: {{ vm.loan.arrangementFee|currency:"£":2 }}
+                    Estimated Arrangement Fee: {{ vm.loan.fees.arrangement|currency:"£":2 }}
                 </label>
                 <label class="item">
-                    Exit Fee: {{ vm.loan.exitFee|currency:"£":2 }}
+                    Exit Fee: {{ vm.loan.fees.exit|currency:"£":2 }}
                 </label>
                 <label class="item">
-                    Legal Fee: {{ vm.loan.legalFee }}
+                    Legal Fee: To be confirmed.
                 </label>
                 <label class="item">
-                    Valuation Fee: {{ vm.loan.valuationFee }}
+                    Valuation Fee: To be confirmed.
                 </label>
+
                 <label class="item item-divider">
-                    Total
+                    Costs
                 </label>
                 <label class="item">
-                    Total cost over {{ vm.form.duration }} month(s) is : {{ vm.loan.cost|currency:"£":2 }}
+                    Financial Cost: {{ vm.loan.costs.financial|currency:"£":2 }}
+                </label>
+                <label class="item">
+                    Fees: {{ vm.loan.costs.fees|currency:"£":2 }}
+                </label>
+                <label class="item">
+                    Total: {{ vm.loan.costs.total|currency:"£":2 }}
                 </label>
                 <label class="item">
                     If you repay early the total cost over X months is : X
                 </label>
+
             </div>
+            <p>
+                If you borrow {{ vm.form.capital|currency:"£":2 }} over {{ vm.form.duration }} month(s) at a rate of {{ vm.loan.rates.nominal }}%, you will pay instalments of {{ vm.loan.perMonth|currency:"£":2 }} per month and a total amount of payable of {{ vm.loan.total|currency:"£":2 }}. This includes the net loan, interest of {{ vm.loan.costs.financial|currency:"£":2 }} and fees of {{ vm.loan.costs.fees|currency:"£":2 }}. The overall cost for comparison is {{ vm.loan.rates.overall }}%.
+            </p>
+            <p>
+                This Bridging Loan calculator provides an example of finance for illustrative purposes only and includes a broker fee and a lender arrangement fee. All loans are subject to status. Willows can help you narrow down your search using further details you provide about your circumstances. Contact us now or apply online.
+            </p>
         </div>
 
     </div>
