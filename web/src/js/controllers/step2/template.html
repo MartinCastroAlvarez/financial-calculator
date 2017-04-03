@@ -1,0 +1,90 @@
+<ion-content scroll="true">
+<div class="row responsive-sm">
+    <div class="col col-50 col-offset-25 row">
+        <h4>
+           Step 2 of 3
+        </h4>
+        <div class="list">
+    	    <div class="item item-input item-select">
+    	        <div class="input-label">
+    	    	    If refurbhishment / build work required?
+    	        </div>
+    	        <select ng-model='vm.form.refurbishment'>
+    	    	    <option value='none' selected>No refurbishment required</option>
+    	    	    <option value='light'>Light refurbishment</option>
+    	    	    <option value='heavy'>Heavy refurbishment</option>
+    	        </select>
+    	    </div>
+    	    <div class="item range range-dark">
+    	        <div class="input-label">
+    	            Number of Properties
+    	        </div>
+    	        <input type="range" min="1" max="10" step="1" ng-model='vm.form.properties'/>
+    	        {{ vm.form.properties }}
+    	    </div>
+    	    <div class="item range range-dark">
+    	        <div class="input-label">
+    	    	    Mortgage
+    	        </div>
+    	        <input type="range" min="1" max="50000000" step="5000" ng-model='vm.form.mortage'/>
+                {{ vm.form.mortage|currency:"£":0 }}
+    	    </div>
+    	    <div class="item range range-dark">
+    	        <div class="input-label">
+    	    	    Outstanding 
+    	        </div>
+    	        <input type="range" min="0" max="50000000" step="5000" ng-model='vm.form.outstanding'/>
+                {{ vm.form.outstanding|currency:"£":0 }}
+    	    </div>
+    	    <div class="item range range-dark">
+    	        <div class="input-label">
+    	    	    Loan to Value
+    	        </div>
+    	        <input type="range" min="0" max="100" step="1" ng-model='vm.form.loantovalue'/>
+                {{ vm.form.loantovalue }} %
+    	    </div>
+    	    <div class="item item-input item-select">
+    	        <div class="input-label">
+    	    	    Payment Method
+    	        </div>
+    	        <select ng-model='vm.form.payment'>
+    	    	    <option value='serviced' selected>Serviced</option>
+    	    	    <option value='rolledup'>Rolled Up</option>
+    	    	    <option value='retained'>Retained</option>
+    	        </select>
+    	    </div>
+    	    <div class="item item-input item-select">
+    	        <div class="input-label">
+    	    	    Property Type
+    	        </div>
+    	        <select ng-model='vm.form.propertyType'>
+    	    	    <option value='residential' selected>Residential</option>
+    	    	    <option value='housefreehold'>House (Freehold)</option>
+    	    	    <option value='houseleasehold'>House (Leasehold)</option>
+    	    	    <option value='flat'>Flat</option>
+    	    	    <option value='hmo'>Licenced or Unlicenced HMO</option>
+    	    	    <option value='other'>Other</option>
+    	    	    <option value='commercial'>Commercial</option>
+    	    	    <option value='office'>Office</option>
+    	    	    <option value='officetenanted'>Office (Tenanted)</option>
+    	    	    <option value='officeother'>Other</option>
+    	    	    <option value='castle'>Castle</option>
+    	    	    <option value='landplanning'>Land / Site with planning</option>
+    	    	    <option value='landnoplanning'>Land / Site with no planning</option>
+    	    	    <option value='landagro'>Agricultural Land</option>
+    	        </select>
+    	    </div>
+    	    <div class="item range range-dark" ng-if='vm.form.propertyType == "houseleasehold"'>
+    	        <div class="input-label">
+    	    	    Years remaining
+    	        </div>
+    	        <input type="range" min="1" max="10" step="1" ng-model='vm.form.leashold'/>
+                {{ vm.form.leasehold }} year(s)
+    	    </div>
+    	     <button class="button button-full button-dark" ng-click='vm.submit()'>
+    	         Continue
+    	    </button>
+        </div>
+    </div>
+</div>
+</ion-content>

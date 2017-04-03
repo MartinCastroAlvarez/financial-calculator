@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'TitleFont';
+  src: url('fonts/bauhaus93.ttf'); /* IE9 Compat Modes */
+}
+
+h1, h2, h3, h4, button { 
+  font-family: 'TitleFont', sans-serif;
+}

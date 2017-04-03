@@ -3,11 +3,32 @@ angular
 .config(function($stateProvider, $urlRouterProvider) {
 
     $stateProvider
-    .state('home', {
-        url: '/',
+    .state('step1', {
+        url: '/step1/',
         authRequired: false,
-        templateUrl: 'home/template',
-        controller: 'HomeCtrl',
+        templateUrl: 'step1/template',
+        controller: 'Step1Ctrl',
+        controllerAs: 'vm',
+    })
+    .state('loan', {
+        url: '/loan/',
+        authRequired: false,
+        templateUrl: 'loan/template',
+        controller: 'LoanCtrl',
+        controllerAs: 'vm',
+    })
+    .state('step2', {
+        url: '/step2/',
+        authRequired: false,
+        templateUrl: 'step2/template',
+        controller: 'Step2Ctrl',
+        controllerAs: 'vm',
+    })
+    .state('step3', {
+        url: '/step3/',
+        authRequired: false,
+        templateUrl: 'step3/template',
+        controller: 'Step3Ctrl',
         controllerAs: 'vm',
     })
     .state('login', {
@@ -18,6 +39,6 @@ angular
         controllerAs: 'vm',
     })
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/step1/');
 
 })

@@ -15,35 +15,38 @@ var sass = require('gulp-sass');
 var minifyCSS = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var gulpif = require('gulp-if');
 
 var paths = {
+    splash: [
+        'src/img/icon.psd',
+        'src/img/splash.psd',
+    ],
     images: [
         'src/img/**/*.+(png|jpg|gif|svg|ico)',
         'src/img/*.+(png|jpg|gif|svg|ico)',
     ],
     sass: [
-        './src/scss/*.scss',
+        'src/libs/*.css',
+        'src/libs/*.scss',
+        'src/libs/**/*.css',
+        'src/libs/**/*.scss',
+        'src/scss/ionic.scss',
+        'src/scss/*[!ionic].scss',
     ],
     fonts: [
-        'src/fonts/**/*',
+        'src/fonts/*',
     ],
-    libs: {
-        dirs: [
-            'src/ionic/**',
-        ],
-        css: [
-            './src/libs/**/*.css',
-            './src/libs/*.css',
-        ],
-        js: [
-            './src/libs/**/*.js',
-            'src/libs/*.js',
-        ],
-    },
+    libs: [
+        'src/ionic/**',
+    ],
     worker: ['src/js/worker.js'],
     manifest: ['src/manifest.json'],
     angular: [
+        'src/libs/**/*.js',
+        'src/libs/*.js',
         'src/js/modules.js',
+        'src/js/main.js',
         'src/js/services/*.js',
         'src/js/config.js',
         'src/js/routes.js',
@@ -54,6 +57,7 @@ var paths = {
     templates: [
         'src/js/controllers/**/*.html',
         'src/js/directives/**/*.html',
+        'src/js/templates/*.html',
     ],
     index: [
         'src/index.html'
@@ -68,108 +72,97 @@ gulp.task('default', defaultDependencies)
 
 // Compress all types of files.
 gulp.task('images', function(){
-  gulp.src(paths.images)
-    .pipe(cache(imagemin({
-       interlaced: true
-    })))
-   .pipe(gulp.dest('www/img/'))
+  return gulp.src(paths.images)
+             .pipe(cache(imagemin({
+               interlaced: true
+             })))
+             .pipe(gulp.dest('www/img/'))
+});
+gulp.task('splash', function(){
+  return gulp.src(paths.splash)
+             .pipe(cache(imagemin({
+               interlaced: true
+             })))
+             .pipe(gulp.dest('resources/'))
 });
 gulp.task('sass', function(done) {
-  gulp.src(paths.sass)
-    .pipe(sass())
-    .on('error', sass.logError)
-    .pipe(concat('style.css'))
-    .pipe(minifyCSS({
-      keepSpecialComments: 0
-    }))
-    // .pipe(rename({extname: '.min.css'}))
-    .pipe(gulp.dest('www/'))
-    .on('end', done);
+  return gulp.src(paths.sass)
+             .pipe(gulpif(['*.scss'], sass()))
+             //.on('error', sass.logError)
+             .pipe(minifyCSS({
+               keepSpecialComments: 0
+             }))
+             .pipe(concat('style.css'))
+             // .pipe(rename({extname: '.min.css'}))
+             .pipe(gulp.dest('www/'));
 });
 gulp.task('fonts', function() {
-  gulp.src(paths.fonts)
-    .pipe(gulp.dest('www/fonts'))
+  return gulp.src(paths.fonts)
+             .pipe(gulp.dest('www/fonts'))
 })
 gulp.task('libs', function(done) {
-  gulp.src(paths.libs.dirs, {base: "src/"})
-    .pipe(gulp.dest('www/'))
-  gulp.src(paths.libs.css)
-    .pipe(minifyCSS({
-      keepSpecialComments: 0
-    }))
-    .pipe(concat('libs.css'))
-    .pipe(gulp.dest('www/libs/'))
-  gulp.src(paths.libs.js)
-    .pipe(ngmin({mangle: false}))
-    .pipe(uglify())
-    .pipe(concat('libs.js'))
-    .pipe(gulp.dest('www/libs'))
-    .on('end', done);
+  return gulp.src(paths.libs, {base: "src/"})
+             .pipe(gulp.dest('www/'));
 });
 gulp.task('angular', function(done) {
-  gulp.src(paths.angular)
-    .pipe(ngmin({mangle: false}))
-    .pipe(uglify())
-    .pipe(concat('app.js'))
-    .pipe(gulp.dest('www/'))
-    .on('end', done);
+  return gulp.src(paths.angular)
+             .pipe(ngmin({mangle: false}))
+             .pipe(uglify())
+             .pipe(concat('app.js'))
+             .pipe(gulp.dest('www/'));
 });
 gulp.task('worker', function(done) {
-  gulp.src(paths.worker)
-    .pipe(uglify())
-    .pipe(gulp.dest('www/'))
-    .on('end', done);
+  return gulp.src(paths.worker)
+             .pipe(uglify())
+             .pipe(gulp.dest('www/'));
 });
 gulp.task('manifest', function(done) {
-  gulp.src(paths.manifest)
-    .pipe(jsonminify())
-    .pipe(gulp.dest('www/'))
-    .on('end', done);
+  return gulp.src(paths.manifest)
+             .pipe(jsonminify())
+             .pipe(gulp.dest('www/'));
 });
 gulp.task('templates', function(done) {
-  gulp.src(paths.templates)
-    .pipe(minifyHTML({
-      empty: true
-    }))
-    .pipe(templateCache('templates.js', {
-      module:'templates',
-      standalone: true,
-      transformUrl: function(url) {
-        return url.replace(path.extname(url), '');
-      }
-    }))
-    .pipe(gulp.dest('www/'))
-    .on('end', done);
+  return gulp.src(paths.templates)
+             .pipe(minifyHTML({
+               empty: true
+             }))
+             .pipe(templateCache('templates.js', {
+                module:'templates',
+                standalone: true,
+                transformUrl: function(url) {
+                  return url.replace(path.extname(url), '');
+                }
+             }))
+             .pipe(gulp.dest('www/'));
 });
 gulp.task('index', function(done) {
-  gulp.src(paths.index)
-    .pipe(minifyHTML({
-      empty: true
-    }))
-    .pipe(gulp.dest('www/'))
-    .on('end', done);
+  return gulp.src(paths.index)
+             .pipe(minifyHTML({
+               empty: true
+             }))
+             .pipe(gulp.dest('www/'));
 });
 
 // Watch when something is changed.
 watchDependencies = [
-  'angular',
-  'templates',
-  'fonts',
-  'images',
-  'libs',
-  'index',
-  'manifest',
-  'worker',
-  'sass',
+    'angular',
+    'templates',
+    'fonts',
+    'images',
+    'libs',
+    'index',
+    'manifest',
+    'splash',
+    'worker',
+    'sass',
 ];
 gulp.task('watch', watchDependencies, function() {
 
   gulp.watch(paths.angular, ['angular']);
   gulp.watch(paths.templates, ['templates']);
   gulp.watch(paths.fonts, ['fonts']);
-  gulp.watch(paths.libs.dirs, ['libs']);
-  gulp.watch(paths.libs.js, ['libs']);
-  gulp.watch(paths.libs.css, ['libs']);
+  gulp.watch(paths.splash, ['splash']);
+  gulp.watch(paths.libs, ['libs']);
   gulp.watch(paths.manfiest, ['manifest']);
   gulp.watch(paths.index, ['index']);
   gulp.watch(paths.worker, ['worker']);
@@ -180,21 +173,21 @@ gulp.task('watch', watchDependencies, function() {
 
 /* Install git on gulp start. */
 gulp.task('install', ['git-check'], function() {
-  return bower.commands.install()
-    .on('log', function(data) {
-      gutil.log('bower', gutil.colors.cyan(data.id), data.message);
-    });
+    return bower.commands.install()
+           .on('log', function(data) {
+               gutil.log('bower', gutil.colors.cyan(data.id), data.message);
+           });
 });
 
 gulp.task('git-check', function(done) {
-  if (!sh.which('git')) {
-    console.log(
-      '  ' + gutil.colors.red('Git is not installed.'),
-      '\n  Git, the version control system, is required to download Ionic.',
-      '\n  Download git here:', gutil.colors.cyan('http://git-scm.com/downloads') + '.',
-      '\n  Once git is installed, run \'' + gutil.colors.cyan('gulp install') + '\' again.'
-    );
-    process.exit(1);
-  }
-  done();
+    if (!sh.which('git')) {
+        console.log(
+            '  ' + gutil.colors.red('Git is not installed.'),
+            '\n  Git, the version control system, is required to download Ionic.',
+            '\n  Download git here:', gutil.colors.cyan('http://git-scm.com/downloads') + '.',
+            '\n  Once git is installed, run \'' + gutil.colors.cyan('gulp install') + '\' again.'
+        );
+         process.exit(1);
+    }
+    done();
 });

@@ -14,5 +14,4 @@ app/kain2/settings/locals.py
 # Ionic webserver.
 web/apk/*
 web/node_modules/
-web/kain2/node_modules/
 web/npm

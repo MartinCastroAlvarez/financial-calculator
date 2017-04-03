@@ -1,0 +1,88 @@
+<ion-content scroll="true" class='padding'>
+<div class="row responsive-sm">
+    <div class="col col-50 col-offset-25 row">
+        <h3>
+           Bridgeform is a FREE to use Brudging Loan sourcing system and marketplace.
+        </h3>
+        <div class='row'>
+    	    <div class="col col-25">
+    	        <i class='icon ion-checkmark-circled'></i>
+    	        100% Free
+    	    </div>
+    	    <div class="col col-25">
+    	        <i class='icon ion-checkmark-circled'></i>
+    	        No Commitments
+    	    </div>
+    	    <div class="col col-25">
+    	        <i class='icon ion-checkmark-circled'></i>
+    	        No broker fees
+    	    </div>
+    	    <div class="col col-25">
+    	        <i class='icon ion-checkmark-circled'></i>
+    	        We search the whole Market
+    	    </div>
+        </div>
+        <h4>
+           Step 1 of 3
+        </h4>
+        <div class="list">
+    	    <div class="item range range-dark">
+    	        <div class="input-label">
+    	            Capital
+    	        </div>
+    	        <input type="range" min="1000" max="1000000" step="500" ng-model='vm.form.capital'/>
+    	        {{ vm.form.capital|currency:"£":0 }}
+    	    </div>
+    	    <div class="item range range-dark">
+    	        <div class="input-label">
+    	            Duration
+    	        </div>
+    	        <input type="range" min="1" max="36" step="1" ng-model='vm.form.months'/>
+    	        {{ vm.form.months }} month(s)
+    	    </div>
+    	    <div class="item range range-dark">
+    	        <div class="input-label">
+    	            Property Value
+    	        </div>
+    	        <input type="range" min="50000" max="50000000" step="5000" ng-model='vm.form.property'/>
+    	        {{ vm.form.property|currency:"£":0 }}
+    	    </div>
+    	    <div class="item item-input item-select">
+    	        <div class="input-label">
+    	    	    Type of charge
+    	        </div>
+    	        <select ng-model='vm.form.chargeType'>
+    	    	    <option value='1st' selected>1st</option>
+    	    	    <option value='2nd'>2nd</option>
+    	    	    <option value='3rd'>3rd</option>
+    	        </select>
+    	    </div>
+    	    <div class="item item-input item-select">
+    	        <div class="input-label">
+    	    	    Security Type
+    	        </div>
+    	        <select>
+    	    	    <option value='residential' selected>Residential</option>
+    	    	    <option value='commercial'>Commercial</option>
+    	    	    <option value='landplanning'>Land / Site with planning</option>
+    	    	    <option value='landnoplanning'>Land / Site with no planning</option>
+    	        </select>
+    	    </div>
+    	    <div class="item item-input item-select">
+    	        <div class="input-label">
+    	    	    Your Credit
+    	        </div>
+    	        <select>
+    	    	    <option value='good' selected>Good</option>
+    	    	    <option value='poor'>Poor</option>
+    	    	    <option value='verypoor'>Very Poor</option>
+    	        </select>
+    	    </div>
+    	     <button class="button button-full button-dark" ng-click='vm.submit()'>
+    	         Continue
+    	    </button>
+
+        </div>
+    </div>
+</div>
+</ion-content>

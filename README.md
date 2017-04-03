@@ -1,6 +1,6 @@
 # Kain2
 
-### Setup OS environment.
+### OS Setup
 ```
 sudo apt update
 sudo apt install nginx git
@@ -10,7 +10,7 @@ cd $HOME
 git clone https://bitbucket.org/martincastro/loancalculator
 ```
 
-### Setup Django environment.
+### Django Setup
 ```
 apt install python3 python3-virtualenv python3-pip uwsgi
 apt-get install libmysqlclient-dev
@@ -70,7 +70,7 @@ sudo service nginx restart
 sudo service uwsgi restart
 ```
 
-### Setup Ionic environment.
+### Ionic Setup
 ```
 cd $HOME/loancalculator/web/
 sudo echo "
@@ -89,7 +89,7 @@ server {
 sudo ln -sf /etc/nginx/sites-available/loancalculatorweb /etc/nginx/sites-enabled/
 ```
 
-### Check logs.
+### Logs.
 ```
 sudo tail -f /var/log/nginx/access.log
 sudo tail -f /var/log/nginx/error.log
