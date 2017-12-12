@@ -1,4 +1,4 @@
-# Kain2
+# LoanCalculator
 
 ### OS Setup
 ```
